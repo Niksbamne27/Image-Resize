@@ -5,13 +5,15 @@ import csv
 import pymongo
 import base64
 import pandas as pd
-
+from pymongo.mongo_client import MongoClient
 
 # MongoDB connection details
-MONGO_URI = "mongodb://localhost:27017/"
+MONGO_URI = "mongodb+srv://nbamne3:qSR4ydc2bBFfleAq@cluster0.o4vw2qa.mongodb.net/?retryWrites=true&w=majority"
 DATABASE_NAME = "images"
 COLLECTION_NAME = "frames"
-
+# uri = "mongodb+srv://nbamne3:qSR4ydc2bBFfleAq@cluster0.o4vw2qa.mongodb.net/?retryWrites=true&w=majority"
+# Create a new client and connect to the server
+client = MongoClient(MONGO_URI)
 # Define custom colormap
 cmap = cv2.COLORMAP_JET
 
@@ -21,6 +23,8 @@ app = Flask(__name__)
 # Function to read image data from CSV
 def read_image_data(depth_min, depth_max):
     try:
+        client.admin.command('ping')
+        print("Pinged your deployment. You successfully connected to MongoDB!")
         df = pd.read_csv('./data/img.csv')
         filtered_df = df[(df["depth"] >= depth_min) & (df["depth"] <= depth_max)]
 
