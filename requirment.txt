@@ -1,0 +1,7 @@
+opencv-python
+flask
+jsonify
+SQLAlchemy
+flask_sqlalchemy
+pymongo
+docker
